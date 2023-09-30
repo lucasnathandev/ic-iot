@@ -4,8 +4,14 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import * as VueRouter from "vue-router";
 
 import App from "./App.vue";
+import Home from "./views/Home.vue";
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHashHistory(),
+  routes: [{ path: "/", component: Home }],
+});
 
 const vuetify = createVuetify({
   components,
@@ -13,6 +19,7 @@ const vuetify = createVuetify({
 });
 
 const app = createApp(App);
+app.use(router);
 app.use(vuetify);
 
 app.mount("#app");
