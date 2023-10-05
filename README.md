@@ -17,6 +17,7 @@ Tecnologias:
 - Typescript
 - VueJS
 - Vuetify
+- Pinia
 
 
 ## Core Domain
