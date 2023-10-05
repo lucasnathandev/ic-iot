@@ -15,9 +15,9 @@ Abordagens e técnicas:
 
 Tecnologias:
 - Typescript
-- NestJS
-- PrismaORM
-- PostgreSQL
+- VueJS
+- Vuetify
+
 
 ## Core Domain
 O Core Domain da aplicação são os dispositivos de IoT.

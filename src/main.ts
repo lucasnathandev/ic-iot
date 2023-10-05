@@ -8,6 +8,7 @@ import * as VueRouter from "vue-router";
 
 import App from "./App.vue";
 import Home from "./views/Home.vue";
+import { pinia } from "./stores";
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
   routes: [{ path: "/", component: Home }],
@@ -21,5 +22,6 @@ const vuetify = createVuetify({
 const app = createApp(App);
 app.use(router);
 app.use(vuetify);
+app.use(pinia);
 
 app.mount("#app");
