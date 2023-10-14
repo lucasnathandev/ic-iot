@@ -16,5 +16,6 @@ Tecnologias:
 - Typescript
 - VueJS
 - Quasar
+- Pinia
 
 ## Em desenvolvimento...
