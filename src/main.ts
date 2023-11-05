@@ -14,14 +14,18 @@ import "quasar/src/css/index.sass";
 import * as VueRouter from "vue-router";
 
 import App from "./App.vue";
-import Home from "./views/Home.vue";
-import { pinia } from "./stores";
+import { createPinia } from "pinia";
+import { routes } from "./router";
+
+const pinia = createPinia();
+
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
-  routes: [{ path: "/", component: Home }],
+  routes,
 });
 
 const app = createApp(App);
+console.log(import.meta.env.APP_ORIGIN);
 
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
