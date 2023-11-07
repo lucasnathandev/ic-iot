@@ -25,7 +25,6 @@ const router = VueRouter.createRouter({
 });
 
 const app = createApp(App);
-console.log(import.meta.env.APP_ORIGIN);
 
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
