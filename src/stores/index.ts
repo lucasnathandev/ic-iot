@@ -2,22 +2,46 @@ import { authAPI, boxAPI } from "../lib/axios";
 import { defineStore } from "pinia";
 import { useSocket } from "../lib/socket-io";
 import { ref } from "vue";
+import { ISensorFields } from "../interfaces/sensor-fields.interface";
 
 export const useBoxDataStore = defineStore("box-data", {
   state() {
-    const boxes = ref();
-    return { boxes };
+    const boxDataList = ref<
+      {
+        id: string;
+        battery: number;
+        date: Date;
+        time: string;
+        sensors: ISensorFields;
+        boxId: string;
+        readonly customerId?: string;
+      }[]
+    >([]);
+    const socket = useSocket();
+
+    socket.on("send-box-data", (boxData) => {
+      console.log(boxData);
+    });
+
+    socket.on("get-box-data", (data) => {
+      boxDataList.value =
+        data.length > 20
+          ? Array.from(data).filter((_, index) => index >= data.length - 20)
+          : data;
+    });
+
+    return { boxDataList, socket };
   },
   actions: {
     async sendBoxData(payload: any) {
-      const socket = useSocket();
-      socket.emit("box-data", payload);
+      const socket = this.$state.socket;
+
+      socket.emit("send-box-data", payload);
     },
 
-    async getBoxData(payload: { id: string }) {
-      const { id } = payload;
-      const socket = useSocket();
-      this.$state.boxes = socket.emit("box-data", { id });
+    async getBoxData(id: string) {
+      const socket = this.$state.socket;
+      socket.emit("get-box-data", id);
     },
   },
 });
