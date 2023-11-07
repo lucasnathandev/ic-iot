@@ -1,13 +1,12 @@
 import { io } from "socket.io-client";
 
-const socket = io(import.meta.env.VITE_API_ORIGIN || "http://localhost:8000");
+export function useSocket() {
+  const socket = io(
+    import.meta.env.VITE_WS_API_ORIGIN || "http://localhost:8000/iot-box"
+  );
+  socket.on("connect", () => {
+    console.log("connected");
+  });
 
-socket.on("connect", () => {
-  console.log("connected");
-});
-
-socket.on("box-data", (...args) => {
-  console.log(args);
-});
-
-export const useSocket = () => socket;
+  return socket;
+}
