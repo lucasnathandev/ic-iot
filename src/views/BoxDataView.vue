@@ -8,10 +8,12 @@ import { faker } from '@faker-js/faker'
 
 const store = useBoxDataStore()
 
+const routeParams = useRoute().params
+
 onBeforeMount(async () => await getBoxData(resolveRouteParam('id')))
 
 function resolveRouteParam(propertyToResolve: string) {
-  const routeParams = useRoute().params
+
   const param = routeParams[propertyToResolve]
 
   return param instanceof Array ? param[0] : param
@@ -23,6 +25,7 @@ async function getBoxData(id: string) {
 }
 
 const fakeCustomerId = faker.string.uuid()
+
 
 onMounted(() => {
   setInterval(async () => {
@@ -50,6 +53,6 @@ onMounted(() => {
     <q-item-section>GPS</q-item-section>
   </q-item>
   <q-list bordered separator class="q-pt-xl">
-    <BoxData v-for="boxData in store.boxDataList" :boxData="boxData" :key="boxData.id" />
+    <BoxData ref="boxDataListRef" v-for="(boxData, index) in store.boxDataList" :boxData="boxData" :key="index" />
   </q-list>
 </template>
