@@ -16,3 +16,11 @@ export const boxAPI = axios.create({
     ...generalHeaders,
   },
 });
+
+export const customerAPI = axios.create({
+  baseURL: origin + "/customer",
+  headers: {
+    Authorization: localStorage.getItem("jwt"),
+    ...generalHeaders,
+  },
+});
