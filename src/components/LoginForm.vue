@@ -3,18 +3,18 @@ import { onBeforeMount, ref } from 'vue'
 import { useLoginStore } from '../stores';
 import { useRouter } from 'vue-router';
 
+const router = useRouter()
+
 const email = ref<string>('')
 
 const password = ref<string>('')
 
 const store = useLoginStore()
 
-function isAuthenticated() {
-  return !!localStorage.getItem('jwt')
-}
+const isAuthenticated = ref<Storage>(localStorage)
 
 onBeforeMount(() => {
-  if (isAuthenticated()) useRouter().push('/dashboard')
+  if (isAuthenticated.value.getItem('jwt')) useRouter().push('/dashboard')
 })
 
 const submitting = ref<boolean>(false)
@@ -24,15 +24,15 @@ async function onSubmit() {
   await store.login({ email: email.value, password: password.value }).catch(() => {
 
     alert('Credenciais inválidas')
-    onReset()
+    submitting.value = false; onReset()
   })
 
-  useRouter().push('/dashboard')
+  router.push('/dashboard')
 }
 
 
 function onReset() {
-  submitting.value = false
+
   email.value = ''
   password.value = ''
 }
@@ -47,11 +47,15 @@ function onReset() {
         :rules="[val => /^[\w\d\.\_]+@\w+\.\w{2,}$/.test(val) || 'Por favor coloque um email valido']"></q-input>
       <q-input class="row-3" filled v-model="password" type="password" label="Password" hint="e.g yourpassword" lazy-rules
         :rules="[val => /^.{7,}$/.test(val) || 'Por favor coloque uma senha com no mínimo 8 caractéres']"></q-input>
-      <q-btn class="row-6" type="submit" color="primary" label="Sign In"></q-btn>
+      <div class="btn-container">
+        <q-btn class="q-mx-sm" type="submit" color="primary" label="Entrar na conta"></q-btn>
+        <q-btn class="q-mx-sm" type="reset" color="white" text-color="black" label="Limpar Formulário"></q-btn>
+      </div>
 
       <div class="q-pa-md flex flex-center">
         <q-circular-progress v-if="submitting" indeterminate rounded size="50px" color="lime" class="q-ma-md" />
       </div>
+      <q-btn to="/new-account" color="secondary">Criar uma conta</q-btn>
     </q-form>
   </div>
 </template>
