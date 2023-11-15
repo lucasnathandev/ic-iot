@@ -2,14 +2,11 @@
 import { useRouter } from 'vue-router';
 import DashBoardBoxes from '../components/DashBoardBoxes.vue';
 import { useLoginStore } from '../stores';
-import { onBeforeMount } from 'vue';
+
 
 const store = useLoginStore()
 
-onBeforeMount(() => {
-  const token = localStorage.getItem('jwt')
-  if (!token) useRouter().push('/')
-})
+
 
 function logout() {
   store.logout()

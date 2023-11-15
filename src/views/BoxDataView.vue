@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import BoxData from '../components/BoxData.vue'
 import { useBoxDataStore } from '../stores';
 import { onBeforeMount, onMounted } from 'vue';
@@ -25,14 +25,14 @@ async function getBoxData(id: string) {
 }
 
 const fakeCustomerId = faker.string.uuid()
-
+let intervalId: NodeJS.Timeout
 
 onMounted(() => {
-  setInterval(async () => {
+  intervalId = setInterval(async () => {
     await store.sendBoxData({
       battery: faker.number.float({ min: 0.01, max: 1 }),
       date: new Date(),
-      sensors: { gps: { latitude: faker.location.latitude(), longitude: faker.location.longitude() } },
+      sensors: { acceleration: 20, gps: { latitude: faker.location.latitude(), longitude: faker.location.longitude() } },
       boxId: resolveRouteParam('id'),
       customerId: fakeCustomerId
     })
@@ -41,6 +41,8 @@ onMounted(() => {
 
   }, 5000)
 })
+
+onBeforeRouteLeave(() => clearInterval(intervalId))
 
 
 </script>
@@ -54,5 +56,8 @@ onMounted(() => {
   </q-item>
   <q-list bordered separator class="q-pt-xl">
     <BoxData ref="boxDataListRef" v-for="(boxData, index) in store.boxDataList" :boxData="boxData" :key="index" />
+    <div class="row justify-center">
+      <q-spinner-puff color="green-8" size="3em" />
+    </div>
   </q-list>
 </template>

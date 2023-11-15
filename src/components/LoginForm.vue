@@ -21,7 +21,7 @@ const submitting = ref<boolean>(false)
 
 async function onSubmit() {
   submitting.value = true
-  await store.login({ email: email.value, password: password.value }).catch(e => {
+  await store.login({ email: email.value, password: password.value }).catch(() => {
 
     alert('Credenciais inválidas')
     onReset()

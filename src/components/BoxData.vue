@@ -1,18 +1,11 @@
 <script setup lang="ts">
 
-import { ISensorFields } from '../interfaces/sensor-fields.interface'
+import { BoxDataProps } from '../interfaces/box-data-props.interface';
+
 
 
 const { boxData } = defineProps<{
-  boxData: {
-    id: string
-    battery: number;
-    date: Date;
-    time: string;
-    sensors: ISensorFields;
-    boxId: string;
-    customerId?: string;
-  }
+  boxData: BoxDataProps
 }>(
 )
 
