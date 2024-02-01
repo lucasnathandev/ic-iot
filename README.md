@@ -10,16 +10,12 @@ Abordagens e técnicas:
 - Clean Architecture.
 - SOLID.
 - POO(Programação Orientada a Objetos)
-- DDD(Domain-Driven Design)
 - TDD(Test-Driven Development)
 
 Tecnologias:
 - Typescript
-- NestJS
-- PrismaORM
-- PostgreSQL
-
-## Core Domain
-O Core Domain da aplicação são os dispositivos de IoT.
+- VueJS
+- Quasar
+- Pinia
 
 ## Em desenvolvimento...
